@@ -32,3 +32,223 @@ button {
 button {
   cursor: pointer;
 }
+
+.error {
+  background: #fee;
+  color: #c00;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border: 1px solid #fcc;
+}
+
+.search-input {
+  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.student-info {
+  flex: 1;
+}
+
+.student-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.student-actions button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.student-actions button.delete {
+  background: #ff4444;
+  color: white;
+  border: none;
+}
+
+.student-actions button.delete:hover {
+  background: #cc0000;
+}
+
+.student-actions button:not(.delete) {
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.student-actions button:not(.delete):hover {
+  background: #0056b3;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.navigation button {
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.navigation button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.class-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.class-info {
+  flex: 1;
+}
+
+.class-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.class-info p {
+  margin: 0.25rem 0;
+  color: #666;
+}
+
+.students-list {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.students-list ul {
+  margin-top: 0.25rem;
+  padding-left: 1rem;
+}
+
+.students-list li {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.25rem;
+}
+
+.class-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.class-actions button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.class-actions button.delete {
+  background: #ff4444;
+  color: white;
+  border: none;
+}
+
+.class-actions button.delete:hover {
+  background: #cc0000;
+}
+
+.class-actions button:not(.delete) {
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+.class-actions button:not(.delete):hover {
+  background: #0056b3;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.login-info {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.login-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #666;
+}
+
+.login-info p {
+  margin: 0.25rem 0;
+  font-family: monospace;
+  color: #333;
+}
+
+.nav-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-user span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.nav-user .logout {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.nav-user .logout:hover {
+  background: #c82333;
+}

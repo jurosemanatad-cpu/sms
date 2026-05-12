@@ -12,6 +12,32 @@ model Student {
   name       String
   email      String   @unique
   gradeLevel Int
+  classId    String?
+  class      Class?   @relation(fields: [classId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model Class {
+  id           String   @id @default(uuid())
+  name         String
+  gradeLevel   Int
+  academicYear String
+  students     Student[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  TEACHER
 }
