@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Classes } from "./Classes";
 import { Login } from "./Login";
+import { Register } from "./Register";
 import { useAuth } from "./auth-context";
 
 type Student = {
@@ -22,9 +23,13 @@ const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 export function App() {
   const { user, token, logout } = useAuth();
   const [currentView, setCurrentView] = useState<"students" | "classes">("students");
+  const [showRegister, setShowRegister] = useState(false);
 
   if (!token || !user) {
-    return <Login />;
+    if (showRegister) {
+      return <Register onBackToLogin={() => setShowRegister(false)} />;
+    }
+    return <Login onShowRegister={() => setShowRegister(true)} />;
   }
 
   if (currentView === "classes") {

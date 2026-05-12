@@ -1,17 +1,17 @@
 import { useState, FormEvent } from "react";
 import { useAuth } from "./auth-context";
 
-interface LoginProps {
-  onShowRegister?: () => void;
+interface RegisterProps {
+  onBackToLogin?: () => void;
 }
 
-export function Login({ onShowRegister }: LoginProps = {}) {
+export function Register({ onBackToLogin }: RegisterProps = {}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"ADMIN" | "TEACHER">("ADMIN");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -19,7 +19,24 @@ export function Login({ onShowRegister }: LoginProps = {}) {
     setError("");
 
     try {
-      await login(email, password);
+      const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+      
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, role })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      setError("");
+      setEmail("");
+      setPassword("");
+      alert("User registered successfully! You can now login.");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -32,7 +49,7 @@ export function Login({ onShowRegister }: LoginProps = {}) {
       <div className="login-container">
         <h1>School Management System</h1>
         <div className="card">
-          <h2>Login</h2>
+          <h2>Register New User</h2>
           {error && <div className="error">{error}</div>}
           <form onSubmit={handleSubmit} className="form">
             <input
@@ -62,30 +79,39 @@ export function Login({ onShowRegister }: LoginProps = {}) {
                 <span>Show password</span>
               </label>
             </div>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value as "ADMIN" | "TEACHER")}
+              disabled={isLoading}
+            >
+              <option value="ADMIN">Admin</option>
+              <option value="TEACHER">Teacher</option>
+            </select>
             <button type="submit" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+              {isLoading ? "Registering..." : "Register User"}
             </button>
           </form>
-          {onShowRegister && (
+          {onBackToLogin && (
             <div className="register-link">
               <p>
-                Need an account? 
+                Already have an account? 
                 <button 
                   type="button" 
-                  onClick={onShowRegister}
+                  onClick={onBackToLogin}
                   className="link-button"
                   disabled={isLoading}
                 >
-                  Register here
+                  Back to login
                 </button>
               </p>
             </div>
           )}
           <div className="login-info">
-            <h3>Default Admin Account:</h3>
-            <p>Email: admin@school.com</p>
-            <p>Password: admin123</p>
-            <small>You can create additional accounts after login.</small>
+            <h3>Registration Info:</h3>
+            <p>• Admin users can manage all data</p>
+            <p>• Teacher users have limited access</p>
+            <p>• Password must be at least 6 characters</p>
+            <small>After registration, use the login page to access the system.</small>
           </div>
         </div>
       </div>
