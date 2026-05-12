@@ -25,7 +25,7 @@ services:
       - key: JWT_SECRET
         value: your-production-jwt-secret-change-this
       - key: CORS_ORIGINS
-        value: https://sms-web.onrender.com
+        value: https://sms-web-gn32.onrender.com
 
   - type: web
     name: sms-web
@@ -35,7 +35,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://sms-api.onrender.com
+        value: https://sms-api-3y9r.onrender.com
     routes:
       - type: rewrite
         source: /*
