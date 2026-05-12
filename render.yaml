@@ -7,7 +7,7 @@ databases:
 services:
   - type: web
     name: sms-api
-    runtime: node
+    env: node
     plan: free
     rootDir: api
     buildCommand: npm install && npm run build && npm run prisma:generate && npm run prisma:deploy
@@ -25,8 +25,9 @@ services:
       - key: CORS_ORIGINS
         value: https://sms-web.onrender.com
 
-  - type: static
+  - type: web
     name: sms-web
+    env: static
     rootDir: web
     buildCommand: npm install && npm run build
     staticPublishPath: dist
