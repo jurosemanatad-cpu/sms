@@ -6,6 +6,7 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (event: FormEvent) => {
@@ -38,14 +39,25 @@ export function Login() {
               required
               disabled={isLoading}
             />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <div className="password-input-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={isLoading}
+              />
+              <label className="password-toggle">
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={(e) => setShowPassword(e.target.checked)}
+                  disabled={isLoading}
+                />
+                <span>Show password</span>
+              </label>
+            </div>
             <button type="submit" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
             </button>

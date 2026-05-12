@@ -252,3 +252,28 @@ ul {
 .nav-user .logout:hover {
   background: #c82333;
 }
+
+.password-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.password-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  margin: 0.25rem 0;
+}
+
+.password-toggle input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
