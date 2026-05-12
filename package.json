@@ -2,6 +2,9 @@
   "name": "school-management-system",
   "private": true,
   "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
   "workspaces": [
     "api",
     "web"
