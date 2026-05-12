@@ -10,7 +10,7 @@ async function createTeacher() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "teacher@school.com",
-        password: "teacher123",
+        password: "123456",
         role: "TEACHER"
       })
     });
@@ -20,12 +20,12 @@ async function createTeacher() {
       console.log("✅ Teacher created successfully!");
       console.log("📧 Email:", data.user.email);
       console.log("👤 Role:", data.user.role);
-      console.log("🔑 Password: teacher123");
+      console.log("🔑 Password: 123456");
       console.log("🌐 Login at: https://sms-web-gn32.onrender.com");
     } else if (response.status === 409) {
       console.log("✅ Teacher already exists!");
       console.log("📧 Email: teacher@school.com");
-      console.log("🔑 Password: teacher123");
+      console.log("🔑 Password: 123456");
       console.log("🌐 Login at: https://sms-web-gn32.onrender.com");
     } else {
       const error = await response.json();

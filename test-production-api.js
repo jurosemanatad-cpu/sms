@@ -19,7 +19,7 @@ async function testProductionAPI() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "admin@school.com",
-        password: "admin123",
+        password: "123456",
         role: "ADMIN"
       })
     });
@@ -42,7 +42,7 @@ async function testProductionAPI() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "admin@school.com",
-        password: "admin123"
+        password: "123456"
       })
     });
 

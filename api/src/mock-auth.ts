@@ -3,14 +3,14 @@ export const mockUsers = [
   {
     id: "demo-admin-1",
     email: "admin@school.com",
-    password: "admin123", // In production, this would be hashed
+    password: "123456", // In production, this would be hashed
     role: "ADMIN",
     createdAt: new Date().toISOString()
   },
   {
     id: "demo-teacher-1", 
     email: "teacher@school.com",
-    password: "teacher123",
+    password: "123456",
     role: "TEACHER",
     createdAt: new Date().toISOString()
   }

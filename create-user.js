@@ -10,7 +10,7 @@ async function createUser() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "admin@school.com",
-        password: "admin123",
+        password: "123456",
         role: "ADMIN"
       })
     });
@@ -20,12 +20,12 @@ async function createUser() {
       console.log("✅ User created successfully!");
       console.log("📧 Email:", data.user.email);
       console.log("👤 Role:", data.user.role);
-      console.log("🔑 Password: admin123");
+      console.log("🔑 Password: 123456");
       console.log("🌐 Login at: https://sms-web-gn32.onrender.com");
     } else if (response.status === 409) {
       console.log("✅ User already exists!");
       console.log("📧 Email: admin@school.com");
-      console.log("🔑 Password: admin123");
+      console.log("🔑 Password: 123456");
       console.log("🌐 Login at: https://sms-web-gn32.onrender.com");
     } else {
       const error = await response.json();

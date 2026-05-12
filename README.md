@@ -19,7 +19,7 @@ A simple, modern school management system built with React, Node.js, Express, an
    - Open the application in your browser
    - Use the default admin credentials:
      - Email: `admin@school.com`
-     - Password: `admin123`
+     - Password: `123456`
    - Click "Login" to access the dashboard
 
 2. **Navigation**

@@ -29,7 +29,7 @@ This document provides a step-by-step demo script for showcasing the School Mana
 **Demo Steps**:
 1. "First, let's log in to the system"
 2. Enter email: `admin@school.com`
-3. Enter password: `admin123`
+3. Enter password: `123456`
 4. Click "Login"
 5. Show successful redirect to main dashboard
 

@@ -12,7 +12,7 @@ async function testLogin() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "admin@school.com",
-        password: "admin123"
+        password: "123456"
       })
     });
 
@@ -32,7 +32,7 @@ async function testLogin() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: "teacher@school.com",
-        password: "teacher123"
+        password: "123456"
       })
     });
 

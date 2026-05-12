@@ -84,7 +84,7 @@ export function Login({ onShowRegister }: LoginProps = {}) {
           <div className="login-info">
             <h3>Default Admin Account:</h3>
             <p>Email: admin@school.com</p>
-            <p>Password: admin123</p>
+            <p>Password: 123456</p>
             <small>You can create additional accounts after login.</small>
           </div>
         </div>
