@@ -17,7 +17,7 @@ if (!parsed.success) {
   for (const issue of parsed.error.issues) {
     console.error(`- ${issue.path.join(".")}: ${issue.message}`);
   }
-  process.exit(1);
+  throw new Error("Invalid environment variables");
 }
 
 export const env = parsed.data;
