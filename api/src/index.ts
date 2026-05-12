@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { env } from "./env.js";
-import { prisma } from "./db.js";
+import { prisma, checkDatabaseConnection } from "./db-check.js";
 import { hashPassword, comparePassword, generateToken, authenticateToken, requireAdmin, AuthRequest } from "./auth.js";
 
 const app = express();
@@ -427,6 +427,26 @@ app.delete("/students/:studentId/class", authenticateToken, async (req: AuthRequ
   }
 });
 
-app.listen(env.PORT, () => {
-  console.log(`API running at http://localhost:${env.PORT}`);
-});
+// Check database connection before starting
+const startServer = async () => {
+  try {
+    const dbConnected = await checkDatabaseConnection();
+    if (dbConnected) {
+      console.log("✅ Database connected successfully");
+    } else {
+      console.log("⚠️  Database connection failed - running in demo mode");
+      console.log("   Some features may not work without a database");
+    }
+    
+    app.listen(env.PORT, () => {
+      console.log(`🚀 API running at http://localhost:${env.PORT}`);
+      console.log(`🌍 Environment: ${env.NODE_ENV}`);
+      console.log(`🔗 CORS Origins: ${env.CORS_ORIGINS}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
