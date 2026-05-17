@@ -63,7 +63,7 @@ export function Register({ onBackToLogin }: RegisterProps = {}) {
   return (
     <div className="form-container fade-in">
       <div className="glass-card">
-        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>EduManage Pro</h1>
+        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>School Management System</h1>
         
         {isPending ? (
           <div style={{ textAlign: "center", padding: "2rem 0" }}>

@@ -30,7 +30,7 @@ export function Login({ onShowRegister }: LoginProps = {}) {
   return (
     <div className="form-container fade-in">
       <div className="glass-card">
-        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>EduManage Pro</h1>
+        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>School Management System</h1>
         <h2 style={{ textAlign: "center", color: "var(--text-secondary)", fontSize: "1.25rem", marginBottom: "2rem" }}>Login to your account</h2>
         {error && <div className="error-alert">{error}</div>}
         <form onSubmit={handleSubmit}>

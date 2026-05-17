@@ -7,7 +7,7 @@ export function Navbar() {
   return (
     <nav className="navigation glass-nav">
       <div className="nav-brand">
-        <h1>EduManage Pro</h1>
+        <h1>School Management System</h1>
       </div>
       <div className="nav-links">
         {user?.role === "ADMIN" || user?.role === "TEACHER" ? (

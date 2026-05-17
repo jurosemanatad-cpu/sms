@@ -26,7 +26,7 @@ export function AdminLayout() {
       <aside className="sidebar glass-card">
         <div className="sidebar-header">
           <h2 style={{ background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            EduManage Pro
+            School Management System
           </h2>
           <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", marginTop: "0.5rem" }}>
             Admin Portal
