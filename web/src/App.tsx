@@ -25,28 +25,7 @@ export function App() {
   const [currentView, setCurrentView] = useState<"students" | "classes">("students");
   const [showRegister, setShowRegister] = useState(false);
 
-  if (!token || !user) {
-    if (showRegister) {
-      return <Register onBackToLogin={() => setShowRegister(false)} />;
-    }
-    return <Login onShowRegister={() => setShowRegister(true)} />;
-  }
-
-  if (currentView === "classes") {
-    return (
-      <div>
-        <nav className="navigation">
-          <button onClick={() => setCurrentView("students")}>Students</button>
-          <button onClick={() => setCurrentView("classes")} className="active">Classes</button>
-          <div className="nav-user">
-            <span>{user.email} ({user.role})</span>
-            <button onClick={logout} className="logout">Logout</button>
-          </div>
-        </nav>
-        <Classes />
-      </div>
-    );
-  }
+  // All hooks must be declared before any conditional returns (React Rules of Hooks)
   const [students, setStudents] = useState<Student[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [name, setName] = useState("");
@@ -59,6 +38,7 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loadStudents = async () => {
+    if (!token) return;
     try {
       setIsLoading(true);
       const response = await fetch(`${API_URL}/students`, {
@@ -81,8 +61,10 @@ export function App() {
   };
 
   useEffect(() => {
-    loadStudents();
-  }, []);
+    if (token) {
+      loadStudents();
+    }
+  }, [token]);
 
   useEffect(() => {
     const filtered = students.filter(student =>
@@ -169,6 +151,31 @@ export function App() {
     setEditingId(null);
     setError("");
   };
+
+  // --- Conditional rendering (after all hooks) ---
+
+  if (!token || !user) {
+    if (showRegister) {
+      return <Register onBackToLogin={() => setShowRegister(false)} />;
+    }
+    return <Login onShowRegister={() => setShowRegister(true)} />;
+  }
+
+  if (currentView === "classes") {
+    return (
+      <div>
+        <nav className="navigation">
+          <button onClick={() => setCurrentView("students")}>Students</button>
+          <button onClick={() => setCurrentView("classes")} className="active">Classes</button>
+          <div className="nav-user">
+            <span>{user.email} ({user.role})</span>
+            <button onClick={logout} className="logout">Logout</button>
+          </div>
+        </nav>
+        <Classes />
+      </div>
+    );
+  }
 
   return (
     <div>

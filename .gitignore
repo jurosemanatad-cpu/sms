@@ -10,3 +10,6 @@ web/node_modules
 web/dist
 api/dist
 api/generated
+# tsc compiled output (Vite handles compilation)
+web/src/*.js
+*.tsbuildinfo
