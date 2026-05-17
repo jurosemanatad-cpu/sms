@@ -28,13 +28,12 @@ export function Login({ onShowRegister }: LoginProps = {}) {
   };
 
   return (
-    <main className="container">
-      <div className="login-container">
-        <h1>School Management System</h1>
-        <div className="card">
-          <h2>Login</h2>
-          {error && <div className="error">{error}</div>}
-          <form onSubmit={handleSubmit} className="form">
+    <div className="form-container fade-in">
+      <div className="glass-card">
+        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>EduManage Pro</h1>
+        <h2 style={{ textAlign: "center", color: "var(--text-secondary)", fontSize: "1.25rem", marginBottom: "2rem" }}>Login to your account</h2>
+        {error && <div className="error-alert">{error}</div>}
+        <form onSubmit={handleSubmit}>
             <input
               type="email"
               placeholder="Email"
@@ -52,43 +51,37 @@ export function Login({ onShowRegister }: LoginProps = {}) {
                 required
                 disabled={isLoading}
               />
-              <label className="password-toggle">
+              <label className="password-toggle" style={{ cursor: "pointer", display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1rem" }}>
                 <input
                   type="checkbox"
                   checked={showPassword}
                   onChange={(e) => setShowPassword(e.target.checked)}
                   disabled={isLoading}
+                  style={{ width: "auto", margin: 0 }}
                 />
-                <span>Show password</span>
+                <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>Show password</span>
               </label>
             </div>
             <button type="submit" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
             </button>
           </form>
-          {onShowRegister && (
-            <div className="register-link">
-              <p>
-                Need an account? 
-                <button 
-                  type="button" 
-                  onClick={onShowRegister}
-                  className="link-button"
-                  disabled={isLoading}
-                >
-                  Register here
-                </button>
-              </p>
-            </div>
-          )}
-          <div className="login-info">
-            <h3>Default Admin Account:</h3>
-            <p>Email: admin@school.com</p>
-            <p>Password: 123456</p>
-            <small>You can create additional accounts after login.</small>
+        {onShowRegister && (
+          <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+            <p style={{ color: "var(--text-secondary)" }}>
+              Need an account? 
+              <button 
+                type="button" 
+                onClick={onShowRegister}
+                style={{ background: "none", color: "var(--accent-primary)", padding: "0 0.5rem", fontWeight: "normal" }}
+                disabled={isLoading}
+              >
+                Register here
+              </button>
+            </p>
           </div>
-        </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }

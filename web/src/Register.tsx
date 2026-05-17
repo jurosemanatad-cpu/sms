@@ -45,13 +45,12 @@ export function Register({ onBackToLogin }: RegisterProps = {}) {
   };
 
   return (
-    <main className="container">
-      <div className="login-container">
-        <h1>School Management System</h1>
-        <div className="card">
-          <h2>Register New User</h2>
-          {error && <div className="error">{error}</div>}
-          <form onSubmit={handleSubmit} className="form">
+    <div className="form-container fade-in">
+      <div className="glass-card">
+        <h1 style={{ textAlign: "center", marginBottom: "0.5rem", background: "linear-gradient(to right, #60a5fa, #a78bfa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>EduManage Pro</h1>
+        <h2 style={{ textAlign: "center", color: "var(--text-secondary)", fontSize: "1.25rem", marginBottom: "2rem" }}>Register New User</h2>
+        {error && <div className="error-alert">{error}</div>}
+        <form onSubmit={handleSubmit}>
             <input
               type="email"
               placeholder="Email"
@@ -69,52 +68,46 @@ export function Register({ onBackToLogin }: RegisterProps = {}) {
                 required
                 disabled={isLoading}
               />
-              <label className="password-toggle">
+              <label className="password-toggle" style={{ cursor: "pointer", display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1rem" }}>
                 <input
                   type="checkbox"
                   checked={showPassword}
                   onChange={(e) => setShowPassword(e.target.checked)}
                   disabled={isLoading}
+                  style={{ width: "auto", margin: 0 }}
                 />
-                <span>Show password</span>
+                <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>Show password</span>
               </label>
             </div>
             <select
               value={role}
-              onChange={(e) => setRole(e.target.value as "ADMIN" | "TEACHER")}
+              onChange={(e) => setRole(e.target.value as "ADMIN" | "TEACHER" | "STUDENT")}
               disabled={isLoading}
             >
               <option value="ADMIN">Admin</option>
               <option value="TEACHER">Teacher</option>
+              <option value="STUDENT">Student</option>
             </select>
             <button type="submit" disabled={isLoading}>
               {isLoading ? "Registering..." : "Register User"}
             </button>
           </form>
-          {onBackToLogin && (
-            <div className="register-link">
-              <p>
-                Already have an account? 
-                <button 
-                  type="button" 
-                  onClick={onBackToLogin}
-                  className="link-button"
-                  disabled={isLoading}
-                >
-                  Back to login
-                </button>
-              </p>
-            </div>
-          )}
-          <div className="login-info">
-            <h3>Registration Info:</h3>
-            <p>• Admin users can manage all data</p>
-            <p>• Teacher users have limited access</p>
-            <p>• Password must be at least 6 characters</p>
-            <small>After registration, use the login page to access the system.</small>
+        {onBackToLogin && (
+          <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+            <p style={{ color: "var(--text-secondary)" }}>
+              Already have an account? 
+              <button 
+                type="button" 
+                onClick={onBackToLogin}
+                style={{ background: "none", color: "var(--accent-primary)", padding: "0 0.5rem", fontWeight: "normal" }}
+                disabled={isLoading}
+              >
+                Back to login
+              </button>
+            </p>
           </div>
-        </div>
+        )}
       </div>
-    </main>
+    </div>
   );
 }

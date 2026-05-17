@@ -3,7 +3,8 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 type User = {
   id: string;
   email: string;
-  role: "ADMIN" | "TEACHER";
+  role: "ADMIN" | "TEACHER" | "STUDENT";
+  studentId?: string;
   createdAt: string;
 };
 

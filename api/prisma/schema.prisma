@@ -7,37 +7,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
-  id         String   @id @default(uuid())
-  name       String
-  email      String   @unique
-  gradeLevel Int
-  classId    String?
-  class      Class?   @relation(fields: [classId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-}
-
-model Class {
-  id           String   @id @default(uuid())
-  name         String
-  gradeLevel   Int
-  academicYear String
-  students     Student[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-}
-
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
-  role      Role     @default(ADMIN)
+  role      Role     @default(STUDENT)
+  student   Student?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id         String       @id @default(uuid())
+  name       String
+  email      String       @unique
+  gradeLevel Int
+  classId    String?
+  class      Class?       @relation(fields: [classId], references: [id])
+  userId     String?      @unique
+  user       User?        @relation(fields: [userId], references: [id])
+  grades     Grade[]
+  attendance Attendance[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model Class {
+  id           String    @id @default(uuid())
+  name         String
+  gradeLevel   Int
+  academicYear String
+  students     Student[]
+  subjects     Subject[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  grades    Grade[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Grade {
+  id        String   @id @default(uuid())
+  score     Float
+  semester  Int      @default(1)
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subjectId String
+  subject   Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attendance {
+  id        String           @id @default(uuid())
+  date      DateTime
+  status    AttendanceStatus
+  studentId String
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }
 
 enum Role {
   ADMIN
   TEACHER
+  STUDENT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
 }
