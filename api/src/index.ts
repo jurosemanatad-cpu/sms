@@ -165,6 +165,34 @@ app.get("/auth/me", authenticateToken, async (req: AuthRequest, res: Response) =
   }
 });
 
+// --- Admin Endpoints ---
+
+app.get("/admin/pending-students", authenticateToken, requireAdmin, async (_req: Request, res: Response) => {
+  try {
+    const students = await prisma.user.findMany({
+      where: { role: "STUDENT", isApproved: false },
+      include: { student: true }
+    });
+    res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch pending students" });
+  }
+});
+
+app.put("/admin/approve-student/:id", authenticateToken, requireAdmin, async (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await prisma.user.update({
+      where: { id },
+      data: { isApproved: true },
+      include: { student: true }
+    });
+    res.json({ message: "Student approved", user });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to approve student" });
+  }
+});
+
 // --- Student Endpoints ---
 
 app.get("/students", authenticateToken, async (_req: Request, res: Response) => {
