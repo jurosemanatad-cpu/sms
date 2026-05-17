@@ -22,7 +22,7 @@ app.get("/health", (_req: Request, res: Response) => {
 // --- Auth Endpoints ---
 
 app.post("/auth/register", async (req: Request, res: Response) => {
-  const { email, password, role = "ADMIN", name, gradeLevel } = req.body as any;
+  const { email, password, role = "ADMIN", name, gradeLevel, subjectSpecialty } = req.body as any;
 
   if (!email || !password) {
     res.status(400).json({ message: "Email and password are required" });
@@ -42,31 +42,45 @@ app.post("/auth/register", async (req: Request, res: Response) => {
 
     const hashedPassword = await hashPassword(password);
     
-    // Create User
-    const user = await prisma.user.create({
-      data: {
-        email: email.trim().toLowerCase(),
-        password: hashedPassword,
-        role
-      }
-    });
+    // Determine data based on role
+    let userData: any = {
+      email: email.trim().toLowerCase(),
+      password: hashedPassword,
+      role
+    };
 
-    // If role is STUDENT, also create a Student record
     if (role === "STUDENT") {
       if (!name || !gradeLevel) {
-        // Rollback user if student data missing
-        await prisma.user.delete({ where: { id: user.id } });
         res.status(400).json({ message: "Name and gradeLevel are required for students" });
         return;
       }
-      await prisma.student.create({
-        data: {
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          gradeLevel: Number(gradeLevel),
-          userId: user.id
-        }
-      });
+      userData.isApproved = false;
+      userData.student = {
+        create: { name: name.trim(), email: email.trim().toLowerCase(), gradeLevel: Number(gradeLevel) }
+      };
+    } else if (role === "TEACHER") {
+      if (!name) {
+        res.status(400).json({ message: "Name is required for teachers" });
+        return;
+      }
+      userData.isApproved = true; // Or false if teachers also need approval
+      userData.teacher = {
+        create: { name: name.trim(), subjectSpecialty: subjectSpecialty?.trim() }
+      };
+    } else {
+      // ADMIN
+      userData.isApproved = true;
+    }
+
+    // Create User with nested relations
+    const user = await prisma.user.create({
+      data: userData,
+      include: { student: true, teacher: true }
+    });
+
+    if (role === "STUDENT") {
+      res.status(201).json({ message: "Registration submitted. Waiting for admin approval." });
+      return;
     }
 
     const token = generateToken(user.id, user.role);
@@ -88,7 +102,7 @@ app.post("/auth/login", async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { email: email.trim().toLowerCase() },
-      include: { student: true }
+      include: { student: true, teacher: true }
     });
 
     if (!user) {
@@ -104,13 +118,19 @@ app.post("/auth/login", async (req: Request, res: Response) => {
       return;
     }
 
+    if (!user.isApproved) {
+      res.status(403).json({ message: "Account pending admin approval." });
+      return;
+    }
+
     const token = generateToken(user.id, user.role);
     res.json({
       user: {
         id: user.id,
         email: user.email,
         role: user.role,
-        studentId: user.student?.id
+        studentId: user.student?.id,
+        teacherId: user.teacher?.id
       },
       token
     });
