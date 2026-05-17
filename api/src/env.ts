@@ -7,7 +7,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   DATABASE_URL: z.string().url(),
-  CORS_ORIGINS: z.string().default("http://localhost:5173"),
+  CORS_ORIGINS: z.string().default("http://localhost:5173,http://localhost:5174"),
   JWT_SECRET: z.string().min(1)
 });
 

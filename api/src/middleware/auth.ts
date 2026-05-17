@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { env } from "./env.js";
-import { prisma } from "./db.js";
+import { env } from "../env.js";
+import { prisma } from "../db-check.js";
+import { isMockMode, mockUsers } from "../mock-auth.js";
 
 export const hashPassword = async (password: string): Promise<string> => {
   return bcrypt.hash(password, 10);
@@ -36,8 +37,30 @@ export const authenticateToken = async (req: AuthRequest, res: Response, next: N
     return;
   }
 
+  // Handle mock demo tokens (format: demo-token-{userId}-{timestamp})
+  if (token.startsWith("demo-token-")) {
+    const parts = token.split("-");
+    // demo-token-{role}-{id}-{timestamp} or demo-token-mock-{role}-{id}-{timestamp}
+    // Find user by matching token prefix
+    const mockUser = mockUsers.find(u => token.includes(u.id));
+    if (mockUser) {
+      req.user = { userId: mockUser.id, role: mockUser.role };
+      next();
+      return;
+    }
+    res.status(401).json({ message: "Invalid mock token" });
+    return;
+  }
+
   try {
     const decoded = verifyToken(token);
+
+    // In mock mode, skip DB verification
+    if (isMockMode()) {
+      req.user = { userId: decoded.userId, role: decoded.role };
+      next();
+      return;
+    }
     
     // Verify user still exists
     const user = await prisma.user.findUnique({

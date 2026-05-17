@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { env } from "./env.js";
+import { setMockMode } from "./mock-auth.js";
 
 let prismaInstance: PrismaClient;
 
@@ -23,9 +24,11 @@ export const checkDatabaseConnection = async () => {
     await client.$connect();
     await client.$queryRaw`SELECT 1`;
     await client.$disconnect();
+    setMockMode(false);
     return true;
   } catch (error) {
     console.error('Database connection failed:', error);
+    setMockMode(true);
     return false;
   }
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "./auth-context";
+import { useAuth } from "../../auth-context";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
@@ -12,6 +12,12 @@ type PerformanceData = {
   attendanceRate: number;
   totalSubjects: number;
   totalAbsences: number;
+  gradeBreakdown?: {
+    id: string;
+    subject: string;
+    score: number;
+    semester: number;
+  }[];
 };
 
 export function StudentDashboard() {
@@ -84,6 +90,41 @@ export function StudentDashboard() {
           </div>
         </div>
       ) : null}
+
+      {data?.gradeBreakdown && data.gradeBreakdown.length > 0 && (
+        <div className="glass-card" style={{ marginTop: "2rem" }}>
+          <h3 style={{ marginBottom: "1rem" }}>Grade Breakdown</h3>
+          <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+            <thead>
+              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
+                <th style={{ padding: "1rem" }}>Subject</th>
+                <th style={{ padding: "1rem" }}>Semester</th>
+                <th style={{ padding: "1rem" }}>Score</th>
+                <th style={{ padding: "1rem" }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.gradeBreakdown.map((grade) => (
+                <tr key={grade.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                  <td style={{ padding: "1rem", fontWeight: "500" }}>{grade.subject}</td>
+                  <td style={{ padding: "1rem", color: "var(--text-secondary)" }}>{grade.semester}</td>
+                  <td style={{ padding: "1rem" }}>
+                    <span style={{ 
+                      fontWeight: "bold",
+                      color: grade.score >= 90 ? "#10b981" : grade.score >= 75 ? "#3b82f6" : "#ef4444" 
+                    }}>
+                      {grade.score}%
+                    </span>
+                  </td>
+                  <td style={{ padding: "1rem" }}>
+                    {grade.score >= 75 ? "Passed" : "Failed"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

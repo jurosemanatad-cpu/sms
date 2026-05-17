@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { useAuth } from "./auth-context";
+import { useAuth } from "../../auth-context";
 
 interface LoginProps {
   onShowRegister?: () => void;

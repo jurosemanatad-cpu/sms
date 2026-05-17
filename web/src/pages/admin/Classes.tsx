@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useAuth } from "./auth-context";
+import { useAuth } from "../../auth-context";
 
 type Class = {
   id: string;
